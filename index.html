@@ -9,7 +9,7 @@
 			text-align: center;
 		}
 		input{
-			font-size: min(3vh, 3vw);
+			font-size: min(5vh, 5vw);
 		}
 		.enter{
 			width: min(max(40vw, 10cm), 90vw);
@@ -106,7 +106,12 @@ span:hover::after{color: #e23;}
 		`;
 	}
 	function copy(){
-		navigator.clipboard.write(c.innerHTML)
+		try {
+			navigator.clipboard.writeText(c.value)
+			alert("已复制！")
+		} catch {
+			alert("请手动复制")
+		}
 	}
 </script>
 </html>
