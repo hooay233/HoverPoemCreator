@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Title</title>
+	<style id="style"></style>
+</head>
+<body id="body">
+	
+</body>
+<script>
+	url = window.location.search;
+	param = new URLSearchParams(url);
+	const ot = param.get("o");
+	const ht = param.get("h");
+	const style = param.get("s");
+	alert(style)
+	let s = "";
+	let t = "";
+	let l = 1;
+	for (const i in ot) {
+		let o = ot[i];
+		let h = ht[i];
+		if (o=="\n" && h=="\n"){
+			t += "<br/>\n";
+			l += 1;
+		} else {
+			s += `
+#${"s"+i}::after{content: "${o}";}
+#${"s"+i}:hover:after{content: "${h}";}`;
+			t += `<span id="${"s"+i}" class="line${l}"></span>`;
+		}
+	}
+	document.getElementById("style").innerHTML=style+s;
+	document.getElementById("body").innerHTML=t;
+</script>
+</html>

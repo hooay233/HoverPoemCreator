@@ -45,8 +45,8 @@
 				<textarea name="ht" id="ht" class="enter"></textarea>
 			</div>
 			<div class="text">
-				<label for="css">样式</label>
-				<textarea name="css" id="css" class="enter">span {
+				<label for="ct">样式</label>
+				<textarea name="ct" id="ct" class="enter">span {
   margin: min(0.5mm, 0.5vw, 0.5vh);
 }
 body{
@@ -64,13 +64,15 @@ span:hover::after{color: #e23;}
 				<textarea name="code" id="code" class="enter"></textarea>
 			</div><br>
 		</div>
-		<input type="button" value="生成" onclick="create()"/><input type="button" value="复制" onclick="copy()"/>
+		<input type="button" value="生成" onclick="create()"/>
+		<input type="button" value="复制" onclick="copy()"/>
+		<input type="button" value="查看" onclick="window.location.replace(`./view.html?o=${encodeURIComponent(ot.value)}&h=${encodeURIComponent(ht.value)}&s=${encodeURIComponent(document.getElementById('ct').value)}`)"/>
 	</div>
 </body>
 <script>
 	const ot = document.getElementById("ot");
 	const ht = document.getElementById("ht");
-	const style = document.getElementById("css");
+	const style = document.getElementById("ct");
 	const c = document.getElementById("code")
 	function create(){
 		let s = "";
