@@ -66,7 +66,7 @@ span:hover::after{color: #e23;}
 		</div>
 		<input type="button" value="生成" onclick="create()"/>
 		<input type="button" value="复制" onclick="copy()"/>
-		<input type="button" value="查看" onclick="window.location.replace(`./view.html?o=${encodeURIComponent(ot.value)}&h=${encodeURIComponent(ht.value)}&s=${encodeURIComponent(document.getElementById('ct').value)}`)"/>
+		<input type="button" value="查看" onclick="window.open(`./view.html?o=${encodeURIComponent(ot.value)}&h=${encodeURIComponent(ht.value)}&s=${encodeURIComponent(document.getElementById('ct').value)}`)"/>
 	</div>
 </body>
 <script>
