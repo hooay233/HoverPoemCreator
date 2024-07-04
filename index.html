@@ -31,6 +31,7 @@
 			font-size: 3vh;
 		}
 	</style>
+	<script src="./function.js"></script>
 </head>
 <body>
 	<div class="box">
@@ -46,17 +47,18 @@
 			</div>
 			<div class="text">
 				<label for="ct">样式</label>
-				<textarea name="ct" id="ct" class="enter">span {
+				<textarea name="ct" id="ct" class="enter">
+span {
   margin: min(0.5mm, 0.5vw, 0.5vh);
 }
 body{
   text-align: center;
 }
-body > * , body{
-  font-size: min(10vw , 10vh);
-  transition: all 0.5s ;
+span::after{
+  font-size: min(calc(100vw / var(--llm) - 2vw), calc((100vh / var(--ln) - 2vh) / 1.5));
 }
-span:hover::after{color: #e23;}
+.diff:hover::after{color: #e23;}
+.same:hover::after{color: #b13;}
 			</textarea>
 			</div>
 			<div class="text">
@@ -64,33 +66,20 @@ span:hover::after{color: #e23;}
 				<textarea name="code" id="code" class="enter"></textarea>
 			</div><br>
 		</div>
-		<input type="button" value="生成" onclick="create()"/>
+		<input type="button" value="生成" onclick="createInTextarea()"/>
 		<input type="button" value="复制" onclick="copy()"/>
-		<input type="button" value="查看" onclick="window.open(`./view.html?o=${encodeURIComponent(ot.value)}&h=${encodeURIComponent(ht.value)}&s=${encodeURIComponent(document.getElementById('ct').value)}`)"/>
+		<input type="button" value="查看" onclick="jump()"/>
 	</div>
 </body>
 <script>
 	const ot = document.getElementById("ot");
 	const ht = document.getElementById("ht");
 	const style = document.getElementById("ct");
-	const c = document.getElementById("code")
-	function create(){
-		let s = "";
-		let t = "";
-		let l = 1;
-		for (const i in ot.value) {
-			let o = ot.value[i];
-			let h = ht.value[i];
-			if (o=="\n" && h=="\n"){
-				t += "<br/>\n";
-				l += 1;
-			} else {
-				s += `
-	#${"s"+i}::after{content: "${o}";}
-	#${"s"+i}:hover:after{content: "${h}";}`;
-				t += `<span id="${"s"+i}" class="line${l}"></span>`;
-			}
-		}
+	const c = document.getElementById("code");
+	
+	function createInTextarea(){
+		let css = zipCss(style.value);
+		let result = create(ot.value, ht.value, css==defaultStyle?undefined:css);
 		c.innerHTML = `<!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -98,15 +87,19 @@ span:hover::after{color: #e23;}
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>title</title>
 	<style>
-		${style.value+s}
+		${result.style}
 	</style>
 </head>
 <body>
-	${t}
+	${result.html}
 </body>
-</html>
-		`;
+</html>`;
 	}
+	
+	// alert(defaultStyle);
+	// alert(zipCss(style.value));
+	// alert(defaultStyle==zipCss(style.value));
+	
 	function copy(){
 		try {
 			navigator.clipboard.writeText(c.value)
@@ -114,6 +107,13 @@ span:hover::after{color: #e23;}
 		} catch {
 			alert("请手动复制")
 		}
+	}
+	
+	function jump(){
+		let css = zipCss(style.value);
+		window.open(`./view.html?o=${encodeURIComponent(ot.value)}&h=${
+		encodeURIComponent(ht.value)}${css==defaultStyle?"":"&s="+
+		encodeURIComponent(css)}`)
 	}
 </script>
 </html>
