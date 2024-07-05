@@ -30,7 +30,7 @@ span::after{
 .same:hover::after{color: #b13;}
 `);
 
-function create(origin, hiden, style=defaultStyle){
+function create(origin, hidden, style=defaultStyle){
 	// alert(style);
 	style = style || defaultStyle
 	// alert(style);
@@ -44,7 +44,7 @@ function create(origin, hiden, style=defaultStyle){
 	for (let i in origin) {
 		++charNumber;
 		let o = origin[i];
-		let h = hiden[i];
+		let h = hidden[i];
 		// 换行
 		if (o=="\n" && h=="\n"){
 			htmlText += "<br/>\n";
